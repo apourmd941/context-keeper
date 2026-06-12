@@ -1,0 +1,22 @@
+{
+  "name": "context-keeper",
+  "description": "context-keeper — cross-session memory for Claude Code. Recall ranked, token-budgeted context from every past session (recall, list_sessions, list_projects MCP tools), with an optional auto-recall hook and a local mind-map UI of your projects, topics, and sessions. Local-first: your transcripts are indexed on your machine by a local embedding model; nothing is uploaded. Requires the free context-keeper daemon (cargo install or repo build).",
+  "version": "2.1.0",
+  "author": {
+    "name": "Padmalochan Singh",
+    "email": "padmalochan.singh@selran.ai",
+    "url": "https://selran.ai"
+  },
+  "homepage": "https://selran.ai",
+  "repository": "https://github.com/apourmd941/context-keeper",
+  "license": "MIT",
+  "keywords": [
+    "memory",
+    "recall",
+    "context",
+    "vector-search",
+    "mind-map",
+    "claude-code",
+    "selran"
+  ]
+}

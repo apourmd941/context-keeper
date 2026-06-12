@@ -1,0 +1,27 @@
+[package]
+name = "ck-pipeline"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+ck-core = { workspace = true }
+ck-store = { workspace = true }
+ck-chunk = { workspace = true }
+ck-embed = { workspace = true }
+ck-vector = { workspace = true }
+ck-transcript = { workspace = true }
+ck-summarize = { workspace = true }
+tokio = { workspace = true }
+notify = { workspace = true }
+notify-debouncer-full = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+thiserror = { workspace = true }
+chrono = { workspace = true }
+sha2 = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }

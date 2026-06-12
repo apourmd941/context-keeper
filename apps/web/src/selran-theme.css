@@ -1,0 +1,171 @@
+/* ============================================================================
+ * Selran Suite — shared theme (v0.2.0)
+ * One portable token layer for every Selran app. Import this FIRST, before the
+ * app's own styles, so apps inherit the shared foundation and may override only
+ * what they need (ideally just --accent for brand identity).
+ *
+ *   <link rel="stylesheet" href="selran-theme.css">   (or @import at top of app CSS)
+ *
+ * Each app keeps its own layout + components — this only sets the palette,
+ * fonts, radii, spacing scale, motion, and safe base element defaults.
+ * Source of truth: theme/design-system.md
+ * ==========================================================================*/
+
+:root {
+  /* ---- color (dark, primary) ---- */
+  --bg:             #0B1220;
+  --bg-subtle:      #0E1626;
+  --surface:        #131C2E;
+  --surface-2:      #1A2438;
+  --border:         #26324A;
+  --border-strong:  #33425F;
+  --fg:             #E8EEF7;
+  --fg-muted:       #9FB0C9;
+  --fg-subtle:      #6E7E98;
+  --accent:         #4F9CF0;   /* an app may override THIS (and the two below) for identity */
+  --accent-hover:   #6FB0F5;
+  --accent-contrast:#07101F;
+  --accent-soft:    #172A45;
+  --success:        #46C08A;
+  --warning:        #E6B450;
+  --danger:         #F0726F;
+  --info:           #4F9CF0;
+  --focus-ring:     #4F9CF0;
+
+  /* ---- type ---- */
+  --font-display: "Geist", -apple-system, "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+  --font-body:    "Geist", -apple-system, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  --font-mono:    "Geist Mono", "SF Mono", "JetBrains Mono", ui-monospace, "Cascadia Code", monospace;
+  --fw-regular: 400; --fw-medium: 500; --fw-semibold: 600; --fw-bold: 700;
+  --text-xs: 12px; --text-sm: 13px; --text-base: 14px; --text-md: 16px;
+  --text-lg: 18px; --text-xl: 20px; --text-2xl: 24px; --text-3xl: 30px; --text-4xl: 38px;
+  --leading-tight: 1.2; --leading-normal: 1.5;
+  --tracking-heading: -0.01em;
+
+  /* ---- spacing / radius ---- */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px; --space-12: 48px;
+  --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-pill: 9999px;
+
+  /* ---- motion ---- */
+  --dur-micro: 120ms; --dur-base: 180ms; --dur-slow: 260ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ---- role-based neutral scale as RGB triplets (for alpha-capable
+     Tailwind colors). 50 = strongest foreground, 950 = page background —
+     ROLES, not absolute lightness, so the light theme simply re-points
+     them and every existing class keeps its meaning. ---- */
+  --ink-50: 232 238 247;   /* fg */
+  --ink-100: 214 224 239;
+  --ink-200: 159 176 201;  /* fg-muted */
+  --ink-300: 110 126 152;  /* fg-subtle */
+  --ink-500: 51 66 95;     /* border-strong */
+  --ink-700: 38 50 74;     /* border */
+  --ink-800: 26 36 56;     /* surface-2 */
+  --ink-900: 19 28 46;     /* surface */
+  --ink-950: 11 18 32;     /* bg */
+  --accent-rgb: 79 156 240;
+
+  color-scheme: dark;
+}
+
+/* ---- light theme: same roles, inverted values. Apps opt in by setting
+   data-theme="light" on <html> (system-following is the app's choice). */
+[data-theme="light"] {
+  --bg:             #F4F6FA;
+  --bg-subtle:      #EDF1F7;
+  --surface:        #FFFFFF;
+  --surface-2:      #F1F4F9;
+  --border:         #D9E0EB;
+  --border-strong:  #C2CCDC;
+  --fg:             #16202E;
+  --fg-muted:       #4E5E76;
+  --fg-subtle:      #7C8AA0;
+  --accent-contrast:#FFFFFF;
+  --accent-soft:    #E3EEFB;
+  --focus-ring:     var(--accent);
+
+  --ink-50: 22 32 46;      /* fg */
+  --ink-100: 35 47 64;
+  --ink-200: 78 94 118;    /* fg-muted */
+  --ink-300: 124 138 160;  /* fg-subtle */
+  --ink-500: 194 204 220;  /* border-strong */
+  --ink-700: 217 224 235;  /* border */
+  --ink-800: 241 244 249;  /* surface-2 */
+  --ink-900: 255 255 255;  /* surface */
+  --ink-950: 244 246 250;  /* bg */
+
+  color-scheme: light;
+}
+
+/* ---- base element defaults (safe foundation; apps can build on top) ---- */
+.selran-theme,
+:root:has(.selran-theme) { color: var(--fg); }
+
+/* Apply to the app root by adding class="selran-theme" on <body> (or :root). */
+.selran-theme {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.selran-theme h1, .selran-theme h2, .selran-theme h3,
+.selran-theme h4, .selran-theme h5, .selran-theme h6 {
+  font-family: var(--font-display);
+  color: var(--fg);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-heading);
+  font-weight: var(--fw-semibold);
+  margin: 0 0 var(--space-3);
+}
+.selran-theme h1 { font-size: var(--text-3xl); font-weight: var(--fw-bold); }
+.selran-theme h2 { font-size: var(--text-2xl); }
+.selran-theme h3 { font-size: var(--text-xl); }
+
+.selran-theme p { color: var(--fg); margin: 0 0 var(--space-3); }
+.selran-theme small, .selran-theme .muted { color: var(--fg-muted); font-size: var(--text-sm); }
+.selran-theme code, .selran-theme pre, .selran-theme kbd { font-family: var(--font-mono); }
+
+.selran-theme a { color: var(--accent); text-decoration: none; }
+.selran-theme a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+.selran-theme ::placeholder { color: var(--fg-subtle); opacity: 1; }
+.selran-theme ::selection { background: var(--accent-soft); }
+
+/* Inputs inherit the theme instead of defaulting to black-on-white */
+.selran-theme input, .selran-theme textarea, .selran-theme select {
+  background: var(--surface-2);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  font: inherit;
+  transition: border-color var(--dur-base) var(--ease), box-shadow var(--dur-base) var(--ease);
+}
+.selran-theme input:focus, .selran-theme textarea:focus, .selran-theme select:focus {
+  outline: none;
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 35%, transparent);
+}
+
+/* Visible focus for keyboard users on any interactive element */
+.selran-theme :focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Scrollbars (WebKit) tuned to the dark surface */
+.selran-theme ::-webkit-scrollbar { width: 10px; height: 10px; }
+.selran-theme ::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: var(--radius-pill); }
+.selran-theme ::-webkit-scrollbar-track { background: transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  .selran-theme *, .selran-theme *::before, .selran-theme *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

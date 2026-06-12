@@ -1,0 +1,20 @@
+[package]
+name = "ck-transcript"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+ck-core = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+simd-json = { workspace = true }
+walkdir = { workspace = true }
+chrono = { workspace = true }
+sha2 = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }

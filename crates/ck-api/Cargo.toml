@@ -1,0 +1,27 @@
+[package]
+name = "ck-api"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+ck-core = { workspace = true }
+ck-store = { workspace = true }
+ck-vector = { workspace = true }
+ck-embed = { workspace = true }
+ck-pipeline = { workspace = true }
+ck-graph = { workspace = true }
+axum = { workspace = true }
+tower-http = { workspace = true, features = ["fs"] }
+tokio = { workspace = true }
+tokio-stream = { workspace = true }
+futures = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+thiserror = { workspace = true }
+chrono = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }
