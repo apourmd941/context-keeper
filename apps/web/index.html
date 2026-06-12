@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>context-keeper</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Pre-CSS anti-flash background on html/body only (the app ships
+         dark-by-default). #root must NOT be pinned dark — it would show
+         through the app's transparent areas in light theme. -->
+    <style>html, body { margin: 0; background: #0B1220; } #root { margin: 0; }</style>
+  </head>
+  <body class="selran-theme bg-ink-950 text-ink-50 font-sans antialiased">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

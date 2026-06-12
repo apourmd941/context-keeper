@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "context-keeper": {
+      "command": "ck",
+      "args": ["mcp"]
+    }
+  }
+}

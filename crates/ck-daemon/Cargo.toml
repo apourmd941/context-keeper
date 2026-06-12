@@ -1,0 +1,18 @@
+[package]
+name = "ck-daemon"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+ck-core = { workspace = true }
+ck-store = { workspace = true }
+ck-embed = { workspace = true }
+ck-vector = { workspace = true }
+ck-pipeline = { workspace = true }
+ck-api = { workspace = true }
+axum = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+anyhow = { workspace = true }
