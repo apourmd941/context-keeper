@@ -1,0 +1,33 @@
+# Rust
+/target
+**/target
+**/*.rs.bk
+
+# Node
+node_modules
+dist
+.vite
+.turbo
+*.tsbuildinfo
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+
+# Local config / secrets
+.env
+.env.local
+
+# Local runtime data — never check in
+.cache/
+~/.context-keeper/
+
+# App startup (shared port-registry) runtime files — never check in
+.app.pid
+.daemon.log
+.web.log
+
+# IDE / agent metadata (machine-specific paths; regenerated)
+.codemap/
+.claude/

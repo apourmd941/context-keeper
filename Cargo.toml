@@ -1,0 +1,99 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/ck-core",
+    "crates/ck-transcript",
+    "crates/ck-store",
+    "crates/ck-chunk",
+    "crates/ck-embed",
+    "crates/ck-vector",
+    "crates/ck-pipeline",
+    "crates/ck-api",
+    "crates/ck-daemon",
+    "crates/ck-summarize",
+    "crates/ck-mcp",
+    "crates/ck-graph",
+    "apps/ck",
+]
+
+[workspace.package]
+version = "2.8.0"
+edition = "2021"
+rust-version = "1.85"
+license = "MIT"
+authors = [
+    "Padmalochan Singh <padmalochan.singh@selran.ai>",
+    "Aidin Eslampour <aidin.eslampour@selran.ai>",
+]
+repository = "https://github.com/apourmd941/context-keeper"
+
+[workspace.dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+simd-json = "0.13"
+thiserror = "2.0"
+anyhow = "1.0"
+uuid = { version = "1.10", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+clap = { version = "4.5", features = ["derive", "env"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+walkdir = "2.5"
+sha2 = "0.10"
+rusqlite = { version = "0.32", features = ["bundled"] }
+directories = "5.0"
+typeshare = "1.0"
+tokio = { version = "1.42", features = ["full"] }
+tempfile = "3"
+toml = "0.8"
+
+# M2: embeddings + vectors + chunking
+fastembed = "4"
+tiktoken-rs = "0.6"
+# Note: M2 originally targeted LanceDB for the vector store, but lance 0.19.2
+# hits a rustc recursion-limit error on stable 1.95 that can only be fixed by
+# patching lance itself. We pivoted to a simple flat-file linear-scan store
+# (ck-vector) — adequate for v0.1 corpora and easy to swap for an ANN backend
+# later.
+bincode = "1.3"
+
+# M3: daemon + watcher + HTTP/WS API
+notify = "6"
+notify-debouncer-full = "0.3"
+axum = { version = "0.7", features = ["ws"] }
+tower-http = { version = "0.5", features = ["trace", "cors"] }
+tokio-stream = "0.1"
+futures = "0.3"
+
+# M4: summaries + MCP
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+
+# M5: topics + edges + mind-map graph
+# (Hand-rolled DBSCAN in ck-graph — linfa-clustering 0.7 wants ndarray 0.15,
+#  but fastembed pulls in 0.16, so we'd hit a multi-version trait-impl
+#  conflict. At v0.1 corpus sizes the naive O(n²) implementation runs in
+#  microseconds, and avoiding the linfa dep tree is a real win.)
+regex = "1"
+once_cell = "1"
+
+# internal crates
+ck-core = { path = "crates/ck-core" }
+ck-transcript = { path = "crates/ck-transcript" }
+ck-store = { path = "crates/ck-store" }
+ck-chunk = { path = "crates/ck-chunk" }
+ck-embed = { path = "crates/ck-embed" }
+ck-vector = { path = "crates/ck-vector" }
+ck-pipeline = { path = "crates/ck-pipeline" }
+ck-api = { path = "crates/ck-api" }
+ck-daemon = { path = "crates/ck-daemon" }
+ck-summarize = { path = "crates/ck-summarize" }
+ck-mcp = { path = "crates/ck-mcp" }
+ck-graph = { path = "crates/ck-graph" }
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = true
+
+[profile.dev]
+opt-level = 1

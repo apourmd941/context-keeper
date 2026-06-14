@@ -1,0 +1,18 @@
+[package]
+name = "ck-chunk"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+ck-core = { workspace = true }
+ck-transcript = { workspace = true }
+chrono = { workspace = true }
+tiktoken-rs = { workspace = true }
+regex = { workspace = true }
+once_cell = { workspace = true }
+tracing = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }

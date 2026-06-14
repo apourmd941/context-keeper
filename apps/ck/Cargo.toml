@@ -1,0 +1,31 @@
+[package]
+name = "ck"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "ck"
+path = "src/main.rs"
+
+[dependencies]
+ck-core = { workspace = true }
+ck-transcript = { workspace = true }
+ck-store = { workspace = true }
+ck-chunk = { workspace = true }
+ck-embed = { workspace = true }
+ck-vector = { workspace = true }
+ck-daemon = { workspace = true }
+ck-summarize = { workspace = true }
+ck-mcp = { workspace = true }
+ck-graph = { workspace = true }
+clap = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+anyhow = { workspace = true }
+chrono = { workspace = true }
+directories = { workspace = true }
+serde_json = { workspace = true }
+sha2 = { workspace = true }

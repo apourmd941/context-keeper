@@ -1,0 +1,20 @@
+[package]
+name = "ck-mcp"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+ck-core = { workspace = true }
+# C4: read the local auth token (Layout::local_token_path) so forwarded
+# requests carry `Authorization: Bearer` when enforcement is on. The shipped
+# `ck` binary already links ck-store, so this adds no new runtime weight.
+ck-store = { workspace = true }
+reqwest = { workspace = true }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }

@@ -1,0 +1,8 @@
+node_modules
+dist
+.vite
+*.tsbuildinfo
+# tsc must never emit into the src tree (Vite handles compilation).
+src/**/*.js
+src/**/*.js.map
+src/**/*.d.ts

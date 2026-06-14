@@ -1,0 +1,35 @@
+[package]
+name = "ck-api"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+ck-core = { workspace = true }
+ck-store = { workspace = true }
+ck-vector = { workspace = true }
+ck-embed = { workspace = true }
+ck-chunk = { workspace = true }
+ck-pipeline = { workspace = true }
+ck-graph = { workspace = true }
+ck-summarize = { workspace = true }
+axum = { workspace = true }
+tower-http = { workspace = true, features = ["fs"] }
+tokio = { workspace = true }
+tokio-stream = { workspace = true }
+futures = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+thiserror = { workspace = true }
+chrono = { workspace = true }
+globset = "0.4"
+
+[dev-dependencies]
+tempfile = { workspace = true }
+# C4: drive the assembled router in-process (ServiceExt::oneshot) to test the
+# local_auth middleware end-to-end. Both versions already resolve in the
+# lockfile via axum/tower-http — no new dependency versions introduced.
+tower = { version = "0.5", features = ["util"] }
+http-body-util = "0.1"
