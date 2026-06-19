@@ -247,6 +247,9 @@ fn make_chunk(
         tracing::debug!(redactions = n, session = %session.0, "redacted secrets from chunk");
     }
     let text = clean.into_owned();
+    // S1: tool_input_preview is a derived artifact too — the text redaction above
+    // doesn't cover this separate field, so redact it explicitly.
+    let tool_input_preview = tool_input_preview.map(|p| redact::redact_secrets(&p).0.into_owned());
     let token_count = count_tokens(&text);
     Chunk {
         id: ChunkId::new(session, turn_index, sub_index),
@@ -328,6 +331,46 @@ mod tests {
         assert_eq!(chunks.len(), 2);
         assert!(matches!(chunks[0].kind, ChunkKind::UserPrompt));
         assert_eq!(chunks[0].text, "hello world");
+    }
+
+    #[test]
+    fn chunker_redacts_secrets_in_chunk_text() {
+        // T2: the privacy promise — no secret enters any derived artifact. Exercise all
+        // three chunk-producing paths (user prompt, assistant text, tool-call merge).
+        let (s, p) = ids();
+        let secret = "sk-ant-api03-abcdEFGH1234567890abcdEFGH1234567890";
+        let records = vec![
+            rec("user", "u1", vec![text_block(&format!("my key is {secret}"))]),
+            rec(
+                "assistant",
+                "a1",
+                vec![
+                    text_block(&format!("ok, using {secret}")),
+                    tool_use("t1", "Bash", &format!("export KEY={secret}")),
+                ],
+            ),
+            attachment("a1", &format!("tool output leaked {secret}")),
+        ];
+        let chunks = chunk_session(&s, &p, &records);
+        assert!(!chunks.is_empty());
+        for c in &chunks {
+            assert!(
+                !c.text.contains(secret),
+                "raw secret leaked in {:?} chunk: {}",
+                c.kind,
+                c.text
+            );
+            // S1: the tool_input_preview field must be redacted too.
+            assert!(
+                c.tool_input_preview.as_deref().map_or(true, |p| !p.contains(secret)),
+                "raw secret leaked in tool_input_preview: {:?}",
+                c.tool_input_preview
+            );
+        }
+        assert!(
+            chunks.iter().any(|c| c.text.contains("[REDACTED:")),
+            "expected a [REDACTED:] marker in some chunk"
+        );
     }
 
     #[test]

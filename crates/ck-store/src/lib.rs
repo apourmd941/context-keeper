@@ -367,6 +367,9 @@ impl MetaIndex {
             r#"
             PRAGMA journal_mode = WAL;
             PRAGMA synchronous = NORMAL;
+            -- C2: wait up to 5s for a competing writer (e.g. `ck doctor --with-embeddings`
+            -- vs the daemon watcher) instead of hard-aborting the CLI on immediate SQLITE_BUSY.
+            PRAGMA busy_timeout = 5000;
 
             CREATE TABLE IF NOT EXISTS sessions (
                 id TEXT PRIMARY KEY,

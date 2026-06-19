@@ -64,7 +64,12 @@ fn with_auth(rb: reqwest::RequestBuilder, config: &McpConfig) -> reqwest::Reques
 /// Run the MCP loop. Reads JSON-RPC newline-delimited from stdin, writes
 /// responses to stdout. Returns when stdin closes.
 pub async fn run(config: McpConfig) -> anyhow::Result<()> {
-    let http = Arc::new(reqwest::Client::builder().build()?);
+    // R1: bound every daemon call so a hung daemon can't hang the Claude session forever.
+    let http = Arc::new(
+        reqwest::Client::builder()
+            .timeout(std::time::Duration::from_secs(30))
+            .build()?,
+    );
     let stdin = tokio::io::stdin();
     let mut reader = BufReader::new(stdin).lines();
     let stdout = tokio::io::stdout();
